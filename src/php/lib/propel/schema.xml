@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="fscatalog2" defaultIdMethod="native">
+  <table name="accounts" phpName="Accounts">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="email" type="varchar" size="128" required="true" primaryKey="true" />
+    <column name="account_level" type="tinyint" size="1" defaultValue="0" required="true" />
+    <column name="first_name" type="varchar" size="128" required="true"/>
+    <column name="last_name" type="varchar" size="128" required="true"/>
+    <column name="gender" type="tinyint" size="1" required="true"/>
+    <column name="dob" type="varchar" size="10" required="true"/>
+    <column name="movie_collection" type="varchar" required="true" />
+    <column name="tv_show_collection" type="varchar" required="true" />
+    <column name="music_collection" type="varchar" required="true" />
+    <column name="book_collection" type="varchar" required="true" />
+    <column name="game_collection" type="varchar" required="true" />
+  </table>
+  <table name="book" namespace="MediaItem" phpName="Book">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="title" type="varchar" size="255" required="true" />
+    <column name="year" type="integer" size="4" required="true" />
+    <column name="isbn" type="varchar" size="24" required="true"/>
+    <column name="cover" type="varchar" required="true"/>
+    <column name="publisher_id" type="integer" required="true"/>
+    <column name="author_id" type="integer" required="true"/>
+    <foreign-key foreignTable="publisher" phpName="Publisher" refPhpName="Book">
+      <reference local="publisher_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="author" phpName="Author" refPhpName="Book">
+      <reference local="author_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="author" namespace="MediaProperty" phpName="Author">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="first_name" type="varchar" size="128" required="true"/>
+    <column name="last_name" type="varchar" size="128" required="true"/>
+    <column name="dob" type="varchar" size="10" required="true"/>
+    <column name="dod" type="varchar" size="10" required="true" />
+  </table>
+  <table name="publisher" namespace="MediaProperty" phpName="Publisher">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="name" type="varchar" size="128" required="true" />
+  </table>
+  <table name="movie" namespace="MediaItem" phpName="Movie">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="title" type="varchar" size="128" required="true" />
+    <column name="rating" type="varchar" size="24" required="true" />
+    <column name="score" type="float" size="3" required="true" />
+    <column name="summary" type="varchar" size="2500" required="true" />
+    <column name="release_date" type="varchar" size="10" required="true" />
+    <column name="director_id" type="integer" required="true" />
+    <column name="actor_ids" type="varchar" required="true" />
+    <column name="poster" type="varchar" required="true"/>
+    <foreign-key foreignTable="director" phpName="Director" refPhpName="Movie">
+      <reference local="director_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="tv_show" namespace="MediaItem" phpName="TVShow">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="title" type="varchar" size="128" required="true" />
+    <column name="rating" type="varchar" size="24" required="true" />
+    <column name="score" type="float" size="3" required="true" />
+    <column name="summary" type="varchar" size="2500" required="true" />
+    <column name="first_aired" type="varchar" size="10" required="true" />
+    <column name="network" type="varchar" size="25" required="true" />
+    <column name="time_slot" type="varchar" size="10" required="true" />
+    <column name="actor_ids" type="varchar" required="true" />
+    <column name="poster" type="varchar" required="true"/>
+    <column name="seasons" type="varchar" required="true" />
+    <column name="episodes" type="longvarchar"/>
+  </table>
+  <table name="actor" namespace="MediaProperty" phpName="Actor">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="first_name" type="varchar" size="128" required="true"/>
+    <column name="last_name" type="varchar" size="128" required="true"/>
+    <column name="dob" type="varchar" size="10" required="true"/>
+    <column name="dod" type="varchar" size="10" required="true" />
+  </table>
+  <table name="director" namespace="MediaProperty" phpName="Director">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="first_name" type="varchar" size="128" required="true"/>
+    <column name="last_name" type="varchar" size="128" required="true"/>
+    <column name="dob" type="varchar" size="10" required="true"/>
+    <column name="dod" type="varchar" size="10" required="true" />
+  </table>
+  <table name="artist" namespace="MediaProperty" phpName="Artist">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="name" type="varchar" size="128" required="true"/>
+    <column name="dob" type="varchar" size="10" required="true" />
+    <column name="dod" type="varchar" size="10" required="true" />
+    <column name="isBand" type="boolean" requried="true" />
+    <column name="date_formed" type="varchar" size="10" />
+    <column name="date_ended" type="varchar" size="10" />
+    <column name="members" type="varchar" required="true" />
+    <column name="albums" type="varchar" required="true" />
+    <column name="label_id" type="integer" required="true" />
+    <foreign-key foreignTable="label" phpName="Label" refPhpName="Artist">
+      <reference local="label_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="album" namespace="MediaItem" phpName="Album">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="title" type="varchar" size="128" required="true"/>
+    <column name="score" type="float" size="3" required="true" />
+    <column name="release_date" type="varchar" size="10" />
+    <column name="songs" type="varchar" required="true" />
+    <column name="artist_id" type="integer" required="true" />
+    <column name="label_id" type="integer" required="true" />
+    <column name="explicit" type="boolean" required="true" />
+    <column name="cover" type="varchar" required="true"/>
+    <foreign-key foreignTable="artist" phpName="Artist" refPhpName="Album">
+      <reference local="artist_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="label" phpName="Label" refPhpName="Album">
+      <reference local="label_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="label" namespace="MediaProperty" phpName="Label">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="name" type="varchar" size="128" required="true"/>
+  </table>
+  <table name="game" namespace="MediaItem" phpName="Game">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="title" type="varchar" size="128" required="true"/>
+    <column name="rating" type="varchar" size="24" required="true" />
+    <column name="score" type="float" size="3" required="true" />
+    <column name="release_date" type="varchar" size="10" required="true" />
+    <column name="systems" type="varchar" size="128" required="true" />
+    <column name="cover" type="varchar" required="true"/>
+    <column name="game_developer_id" type="integer" required="true" />
+    <foreign-key foreignTable="developer" phpName="Developer" refPhpName="Game">
+      <reference local="game_developer_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="developer" namespace="MediaProperty" phpName="Developer">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="name" type="varchar" size="128" required="true"/>
+  </table>
+</database>
